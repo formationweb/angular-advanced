@@ -5,7 +5,7 @@ import { Draw } from "./draw/draw";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Users, Draw],
+  imports: [RouterOutlet, Users],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
