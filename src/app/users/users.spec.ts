@@ -1,22 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Users } from './users';
+import { ComponentFixture, TestBed } from "@angular/core/testing"
 
-describe('Users', () => {
-  let component: Users;
-  let fixture: ComponentFixture<Users>;
+describe('Tester userscomponent', () => {
+  let fixture: ComponentFixture<Users>
+  let comp: Users
+  let el: HTMLElement
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Users],
-    }).compileComponents();
+      imports: [Users]
+    }).compileComponents()
+    fixture = TestBed.createComponent(Users)
+    fixture.detectChanges()
+    comp = fixture.componentInstance
+    el = fixture.nativeElement
+  })
 
-    fixture = TestBed.createComponent(Users);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('Titre affiche composant', () => {
+    expect(comp.title()).toBe('Utilisateurs')
+    const h1 = el.querySelector('h1')
+    expect(h1?.textContent).toContain(comp.title())
+  })
+})

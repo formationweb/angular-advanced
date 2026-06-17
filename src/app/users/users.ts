@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class Users {
   private usersService = inject(UsersService)
+  title = signal('Utilisateurs')
   protected readonly users = this.usersService.usersFiltered
   // protected readonly users = resource({
   //   params: () => {
