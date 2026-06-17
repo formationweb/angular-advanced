@@ -1,8 +1,5 @@
 <h1>{{ title() }} </h1>
 
-@for (user of users() ; track user.id) {
-    <div>
-        <h2>{{ user.name }}</h2>
-        <span>{{ user.email }}</span>
-    </div>
+@for (u of users() ; track u.id) {
+    <app-user-card [user]="u" />
 }
