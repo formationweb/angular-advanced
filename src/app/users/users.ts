@@ -1,19 +1,29 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, resource, signal } from '@angular/core';
 import { User, UsersService } from './users.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './users.html',
   styleUrl: './users.css',
 })
 export class Users {
   private usersService = inject(UsersService)
-  protected readonly users = signal<User[]>([])
-
-  constructor() {
-    this.usersService.getUsers().subscribe(users => {
-     this.users.set(users)
-    })
-  }
+  protected readonly searchValue = signal('')
+  protected readonly users = resource({
+    params: () => {
+      return {
+        search: this.searchValue()
+      }
+    },
+    loader: ({ params, abortSignal }): Promise<User[]> => {
+      return fetch('https://jsonplaceholder.typicode.com/users?search=' + params.search, {
+        signal: abortSignal
+      }).then(res => res.json())
+    }
+  })
+   //protected readonly users = httpResource<User[]>(() => 'https://jsonplaceholder.typicode.com/users?search=' 
+  //+ this.searchValue())
 }
