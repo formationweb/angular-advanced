@@ -11,19 +11,23 @@ import { FormsModule } from '@angular/forms';
 })
 export class Users {
   private usersService = inject(UsersService)
-  protected readonly searchValue = signal('')
-  protected readonly users = resource({
-    params: () => {
-      return {
-        search: this.searchValue()
-      }
-    },
-    loader: ({ params, abortSignal }): Promise<User[]> => {
-      return fetch('https://jsonplaceholder.typicode.com/users?search=' + params.search, {
-        signal: abortSignal
-      }).then(res => res.json())
-    }
-  })
+  protected readonly users = this.usersService.usersFiltered
+  // protected readonly users = resource({
+  //   params: () => {
+  //     return {
+  //       search: this.searchValue()
+  //     }
+  //   },
+  //   loader: ({ params, abortSignal }): Promise<User[]> => {
+  //     return fetch('https://jsonplaceholder.typicode.com/users?search=' + params.search, {
+  //       signal: abortSignal
+  //     }).then(res => res.json())
+  //   }
+  // })
    //protected readonly users = httpResource<User[]>(() => 'https://jsonplaceholder.typicode.com/users?search=' 
   //+ this.searchValue())
+
+  constructor() {
+    this.usersService.getUsers().subscribe()
+  }
 }

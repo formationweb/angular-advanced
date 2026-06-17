@@ -1,15 +1,8 @@
 <!-- <input type="text" [(ngModel)]="searchValue"> -->
 
-@for (user of users.value() ; track user.id) {
+@for (user of users() ; track user.id) {
     <div>
         <h1>{{ user.name }}</h1>
         <span>{{ user.email }}</span>
     </div>
 }
-
-<div>
-    Status : {{ users.status() }} --> loading, resolved, error
-    Chargement {{ users.isLoading() }}
-    Error: {{ users.error() }}
-    possède valeur: {{ users.hasValue() }}
-</div>
