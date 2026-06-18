@@ -1,13 +1,26 @@
-import { AsyncSubject, BehaviorSubject, Observable, of, ReplaySubject, Subject } from "rxjs"
+import { AsyncSubject, BehaviorSubject, interval, mergeMap, Observable, of, ReplaySubject, Subject, Subscription, switchMap } from "rxjs"
 
-const ob$ = new AsyncSubject()
+// interval(1000).subscribe((ev1) => {
+//     console.log('ev1', ev1)
+//     interval(1000).subscribe((ev2) => {
+//          console.log('----ev2', ev2)
+//     })
+// })
 
-ob$.next('a')
-ob$.next('b')
+interval(1000).pipe(
+    switchMap((ev1) => {
+         console.log('ev1', ev1)
+        return interval(1000)
+    })
+).subscribe((ev2) => {
+     console.log('----ev2', ev2)
+})
 
-ob$.subscribe(console.log)
-
-ob$.next('c')
-ob$.complete()
-
-
+// let subscription: Subscription
+// interval(1000).subscribe((ev1) => {
+//     console.log('ev1', ev1)
+//     if (subscription) subscription.unsubscribe()
+//     subscription = interval(1000).subscribe((ev2) => {
+//          console.log('----ev2', ev2)
+//     })
+// })

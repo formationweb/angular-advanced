@@ -1,5 +1,6 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, OnInit, viewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, fromEvent, map, merge, Subject } from 'rxjs';
 
 @Component({
@@ -15,6 +16,7 @@ import { BehaviorSubject, fromEvent, map, merge, Subject } from 'rxjs';
   `
 })
 export class Video implements OnInit {
+  private destroyRef = inject(DestroyRef)
   videoEl = viewChild<ElementRef<HTMLVideoElement>>('videoRef')
   isPlaying$ = new BehaviorSubject(false)
   togglePlay$ = new Subject<void>()
@@ -25,10 +27,18 @@ export class Video implements OnInit {
     merge(
       fromEvent(video, 'play').pipe(map(() => true)),
       fromEvent(video, 'pause').pipe(map(() => false))
-    ).subscribe((bool) => {
+    )
+    .pipe(
+      takeUntilDestroyed(this.destroyRef)
+    )
+    .subscribe((bool) => {
       this.isPlaying$.next(bool)
     })
-    this.togglePlay$.subscribe(() => {
+    this.togglePlay$
+    .pipe(
+      takeUntilDestroyed(this.destroyRef)
+    )
+    .subscribe(() => {
       this.isPlaying$.value ? video.pause() : video.play()
     })
   }

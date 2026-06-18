@@ -1,8 +1,9 @@
-import { Component, inject, resource, signal } from '@angular/core';
+import { Component, inject, OnDestroy, resource, signal } from '@angular/core';
 import { User, UsersService } from './users.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { UserCard } from './user-card/user-card';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -30,6 +31,17 @@ export class Users {
   //+ this.searchValue())
 
   constructor() {
-    this.usersService.getUsers().subscribe()
+    interval(1000)
+    .pipe(
+      takeUntilDestroyed()
+    )
+    .subscribe(console.log)
+    this.usersService
+      .getUsers()
+      .pipe(
+        takeUntilDestroyed()
+      )
+      .subscribe()
   }
+
 }
