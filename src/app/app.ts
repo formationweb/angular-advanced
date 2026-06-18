@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { Users } from "./users/users";
 import { Draw } from "./draw/draw";
 import { Navbar } from "./navbar/navbar";
+import { Video } from "./video/video";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Users, Navbar],
+  imports: [RouterOutlet, Users, Navbar, Video],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
