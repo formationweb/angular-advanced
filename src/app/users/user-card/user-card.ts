@@ -1,4 +1,4 @@
-import { Component, effect, input, Input } from '@angular/core';
+import { Component, effect, input, Input, output } from '@angular/core';
 import { User } from '../users.service';
 
 @Component({
@@ -9,4 +9,5 @@ import { User } from '../users.service';
 })
 export class UserCard {
   user = input.required<User>()
+  onDelete = output<number>()
 }
