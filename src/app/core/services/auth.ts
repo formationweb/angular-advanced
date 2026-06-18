@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { simulateHttpToken } from '../../simulate';
 
@@ -6,12 +6,14 @@ import { simulateHttpToken } from '../../simulate';
   providedIn: 'root',
 })
 export class Auth {
-  private token = signal('')
+  private _token = signal('')
+  token = this._token.asReadonly()
+  hasToken = computed(() => !!this.token())
 
   login(email: string, password: string): Observable<void> {
     return simulateHttpToken().pipe(
       tap(({ token }) => {
-        this.token.set(token)
+        this._token.set(token)
       }),
       map(() => undefined
     ))
