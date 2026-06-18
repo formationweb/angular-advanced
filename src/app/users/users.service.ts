@@ -8,6 +8,10 @@ export interface User {
     name: string
 }
 
+export interface UserWithPermissions extends User {
+    permissions: string[]
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -30,7 +34,7 @@ export class UsersService {
     }
 
 
-   getFirstUser(): Observable<User> {
+   getFirstUser(): Observable<UserWithPermissions> {
     return this.http.get<User>(this.url + '/1').pipe(
       map((user) => {
         return {
