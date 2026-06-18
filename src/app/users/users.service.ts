@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { computed, inject, Injectable, signal } from "@angular/core";
-import { Observable, tap } from "rxjs";
+import { map, Observable, tap } from "rxjs";
 
 export interface User {
     id: number
@@ -28,4 +28,16 @@ export class UsersService {
             })
         )
     }
+
+
+   getFirstUser(): Observable<User> {
+    return this.http.get<User>(this.url + '/1').pipe(
+      map((user) => {
+        return {
+          ...user,
+          permissions: ['user.read', 'user.edit']
+        }
+      })
+    )
+  }
 }
