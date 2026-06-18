@@ -9,5 +9,8 @@ export const routes: Routes = [{
 }, {
     path: '',
     component: Users,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: {
+        requiredAuth: true
+    }
 }];
