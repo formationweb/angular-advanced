@@ -1,4 +1,4 @@
-import { Service } from '@angular/core';
+import { Injectable, Service } from '@angular/core';
 import { PreloadingStrategy, Route } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
@@ -8,7 +8,9 @@ type CustomNavigator = {
     }
 } | undefined
 
-@Service()
+@Injectable({
+    providedIn: 'root'
+})
 export class PreloadStrategy implements PreloadingStrategy {
     preload(route: Route, load: () => Observable<any>): Observable<any> {
         // pas compatible avec tous les navigateurs

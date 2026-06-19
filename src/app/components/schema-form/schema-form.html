@@ -1,0 +1,26 @@
+@if (currentForm()) {
+    <form [formGroup]="currentForm()" (submit)="formSubmit.emit(currentForm())">
+        @for (field of schema() ; track field.name) {
+            @if (field.type == 'string') {
+                <label>{{ field.name }}</label>
+                <input type="text" [formControlName]="field.name">
+            }
+            @if (field.type === 'number') {
+                <label>{{ field.name }}</label>
+                <input type="number" [formControlName]="field.name">
+            }
+            @if (field.type === 'boolean') {
+                <label>
+                    <input type="checkbox" [formControlName]="field.name">
+                    {{ field.name }}
+                </label>
+            }
+            @if (field.type == 'object') {
+                <div>
+                    <app-schema-form [schema]="field.properties ?? []" [form]="getGroup(field.name)" />
+                </div>
+            }
+        }
+       <ng-content />
+    </form>
+}

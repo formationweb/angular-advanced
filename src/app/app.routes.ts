@@ -6,6 +6,7 @@ import { Forbidden } from './forbidden/forbidden';
 import { permissionGuard } from './core/guards/permission.guard';
 import { confirmDeactivateGuard } from './core/guards/confirm.guard';
 import { UserEdit } from './user-edit/user-edit';
+import { UserEditSchema } from './user-edit-schema/user-edit-schema';
 
 export const routes: Routes = [
   {
@@ -35,4 +36,8 @@ export const routes: Routes = [
     component: UserEdit,
     canDeactivate: [confirmDeactivateGuard],
   },
+  {
+    path: 'user-schema',
+    component: UserEditSchema
+  }
 ];

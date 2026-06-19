@@ -1,16 +1,18 @@
-import { inject, Service } from '@angular/core';
+import { inject, Injectable, Service } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { required } from '@angular/forms/signals';
 
-type Field = {
+export type Field = {
     name: string
     type: 'string' | 'boolean' | 'number' | 'object'
     validators?: ('required' | 'email')[],
     properties?: Schema
 }
-type Schema = Field[]
+export type Schema = Field[]
 
-@Service()
+@Injectable({
+    providedIn: 'root'
+})
 export class FormFactory {
     private readonly formBuilder = inject(FormBuilder)
 
