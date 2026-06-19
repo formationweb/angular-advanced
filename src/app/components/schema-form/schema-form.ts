@@ -5,7 +5,7 @@ import { ɵEmptyOutletComponent } from "@angular/router";
 
 @Component({
   selector: 'app-schema-form',
-  imports: [ReactiveFormsModule, ɵEmptyOutletComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './schema-form.html',
   styleUrl: './schema-form.css',
 })
