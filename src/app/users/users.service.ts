@@ -1,50 +1,62 @@
-import { HttpClient } from "@angular/common/http";
-import { computed, inject, Injectable, signal } from "@angular/core";
-import { map, Observable, tap } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { map, Observable, tap } from 'rxjs';
 
 export interface User {
-    id: number
-    email: string
-    name: string
+  id: number;
+  email: string;
+  name: string;
+  address: {
+    city: string;
+    street: string;
+  };
+  tags: string[];
 }
 
 export interface UserWithPermissions extends User {
-    permissions: string[]
+  permissions: string[];
 }
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersService {
-    readonly url = 'https://jsonplaceholder.typicode.com/users'
-    private http = inject(HttpClient)
-    private _users = signal<User[]>([])
-    users = this._users.asReadonly()
-    searchValue = signal('')
-    usersFiltered = computed(() => {
-        return this.users().filter(user => user.name.includes(this.searchValue()))
-    })
+  readonly url = 'https://jsonplaceholder.typicode.com/users';
+  private http = inject(HttpClient);
+  private _users = signal<User[]>([]);
+  users = this._users.asReadonly();
+  searchValue = signal('');
+  usersFiltered = computed(() => {
+    return this.users().filter((user) => user.name.includes(this.searchValue()));
+  });
 
-    getUsers(): Observable<User[]> {
-        return this.http.get<User[]>(this.url).pipe(
-            tap((users) => {
-                this._users.set(users)
-            })
-        )
-    }
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url).pipe(
+      tap((users) => {
+        this._users.set(users);
+      }),
+    );
+  }
 
-    getUser(id: number): Observable<User> {
-        return this.http.get<User>(this.url + '/' + id)
-    }
+  getUser(id: number): Observable<User> {
+    return this.http.get<User>(this.url + '/' + id).pipe(
+      map((user) => {
+        return {
+          ...user,
+          tags: ['admin', 'premium'],
+        };
+      }),
+    );
+  }
 
-   getFirstUser(): Observable<UserWithPermissions> {
+  getFirstUser(): Observable<UserWithPermissions> {
     return this.http.get<User>(this.url + '/1').pipe(
       map((user) => {
         return {
           ...user,
-          permissions: ['user.read', 'user.edit']
-        }
-      })
-    )
+          permissions: ['user.read', 'user.edit'],
+        };
+      }),
+    );
   }
 }

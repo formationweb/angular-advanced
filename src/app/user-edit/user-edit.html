@@ -9,5 +9,25 @@
     <label>Email</label>
     <input type="text" formControlName="email">
 
+    <div formGroupName="address">
+        <label>City</label>
+        <input type="text" formControlName="city">
+
+        <label>Rue</label>
+        <input type="text" formControlName="street">
+    </div>
+
+    <div formArrayName="tags">
+        <label>Tags</label>
+        @for (tags of tagControls ; track tags) {
+           <div>
+             <input type="text" [formControl]="tags">
+            <button (click)="removeTag($index)">Remove</button>
+           </div>
+           <hr>
+        }
+        <button (click)="addTag()">Ajouter</button>
+    </div>
+
     <button>Modification</button>
 </form>
