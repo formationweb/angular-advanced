@@ -11,7 +11,7 @@ import { UserEditSchema } from './user-edit-schema/user-edit-schema';
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./login/login').then((mod) => mod.Login),
+    loadComponent: () => import('./login_copy/login').then((mod) => mod.Login),
   },
   {
     path: 'admin',

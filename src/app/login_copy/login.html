@@ -1,0 +1,12 @@
+<form (submit)="login($event)">
+
+    {{ errorEmail() }}
+
+    <label>Email</label>
+    <input type="text" [formField]="loginForm.email">
+
+    <label>Mot de passe</label>
+    <input type="password" [formField]="loginForm.password">
+
+    <button>Se connecter</button>
+</form>
