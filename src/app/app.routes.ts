@@ -13,8 +13,8 @@ export const routes: Routes = [{
 }, {
     path: '',
     component: Users,
-    canActivate: [authGuard, permissionGuard(['user.read', 'user.delete'])],
-    canDeactivate: [confirmDeactivateGuard],
+   // canActivate: [authGuard, permissionGuard(['user.read', 'user.delete'])],
+    //canDeactivate: [confirmDeactivateGuard],
     data: {
         requiredAuth: true,
         //requiredPermissions: ['user.read', 'user.delete']
@@ -24,5 +24,6 @@ export const routes: Routes = [{
     component: Forbidden
 }, {
     path: 'edit/:id',
-    component: UserEdit
+    component: UserEdit,
+    canDeactivate: [confirmDeactivateGuard]
 }];
