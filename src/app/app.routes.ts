@@ -5,6 +5,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { Forbidden } from './forbidden/forbidden';
 import { permissionGuard } from './core/guards/permission.guard';
 import { confirmDeactivateGuard } from './core/guards/confirm.guard';
+import { UserEdit } from './user-edit/user-edit';
 
 export const routes: Routes = [{
     path: 'login',
@@ -21,4 +22,7 @@ export const routes: Routes = [{
 }, {
     path: 'forbidden',
     component: Forbidden
+}, {
+    path: 'edit/:id',
+    component: UserEdit
 }];

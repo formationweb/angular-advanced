@@ -33,6 +33,9 @@ export class UsersService {
         )
     }
 
+    getUser(id: number): Observable<User> {
+        return this.http.get<User>(this.url + '/' + id)
+    }
 
    getFirstUser(): Observable<UserWithPermissions> {
     return this.http.get<User>(this.url + '/1').pipe(
