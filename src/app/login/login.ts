@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '../core/services/auth';
 import { Router } from '@angular/router';
@@ -7,16 +7,17 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   imports: [ReactiveFormsModule],
   templateUrl: './login.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login.css',
 })
 export class Login {
   private auth = inject(Auth);
-  private router = inject(Router)
+  private router = inject(Router);
   passwordField = new FormControl('', {
-    nonNullable: true
+    nonNullable: true,
   });
   emailField = new FormControl('', {
-    nonNullable: true
+    nonNullable: true,
   });
   form = new FormGroup({
     password: this.passwordField,
@@ -26,7 +27,7 @@ export class Login {
   login() {
     const { password, email } = this.form.value;
     this.auth.login(email!, password!).subscribe(() => {
-        this.router.navigateByUrl('/')
+      this.router.navigateByUrl('/');
     });
   }
 }

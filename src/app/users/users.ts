@@ -1,4 +1,11 @@
-import { Component, inject, OnDestroy, resource, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  resource,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { User, UsersService } from './users.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -11,12 +18,13 @@ import { CanComponentDeactivate } from '../core/guards/confirm.guard';
   selector: 'app-users',
   imports: [FormsModule, UserCard, RouterLink],
   templateUrl: './users.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './users.css',
 })
 export class Users implements CanComponentDeactivate {
-  private usersService = inject(UsersService)
-  title = signal('Utilisateurs')
-  protected readonly users = this.usersService.usersFiltered
+  private usersService = inject(UsersService);
+  title = signal('Utilisateurs');
+  protected readonly users = this.usersService.usersFiltered;
   // protected readonly users = resource({
   //   params: () => {
   //     return {
@@ -29,25 +37,15 @@ export class Users implements CanComponentDeactivate {
   //     }).then(res => res.json())
   //   }
   // })
-   //protected readonly users = httpResource<User[]>(() => 'https://jsonplaceholder.typicode.com/users?search=' 
+  //protected readonly users = httpResource<User[]>(() => 'https://jsonplaceholder.typicode.com/users?search='
   //+ this.searchValue())
 
   constructor() {
-    interval(1000)
-    .pipe(
-      takeUntilDestroyed()
-    )
-    .subscribe(console.log)
-    this.usersService
-      .getUsers()
-      .pipe(
-        takeUntilDestroyed()
-      )
-      .subscribe()
+    interval(1000).pipe(takeUntilDestroyed()).subscribe(console.log);
+    this.usersService.getUsers().pipe(takeUntilDestroyed()).subscribe();
   }
 
   isModified() {
-    return true
+    return true;
   }
-
 }
