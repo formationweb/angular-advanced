@@ -5,6 +5,7 @@ import { Draw } from './draw/draw';
 import { Navbar } from './navbar/navbar';
 import { Video } from './video/video';
 import { Dialog } from '@angular/cdk/dialog';
+import { HeavySimulationComponent } from "./heavy.component";
 
 @Component({
   selector: 'app-dialog',
@@ -16,7 +17,7 @@ class DialogComponent {}
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Users, Navbar, Video],
+  imports: [RouterOutlet, Users, Navbar, Video, HeavySimulationComponent],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.css',

@@ -2,3 +2,16 @@
 <router-outlet />
 
 <!-- <button (click)="openDialog()">Open Dialog</button> -->
+
+@defer (on viewport) {
+    <app-heavy-simulation />
+}
+@placeholder {
+    <p>...</p>
+}
+@loading {
+    <p>loading</p>
+}
+@error {
+    <p>Erreur</p>
+}

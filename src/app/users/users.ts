@@ -41,7 +41,7 @@ export class Users implements CanComponentDeactivate {
   //+ this.searchValue())
 
   constructor() {
-    interval(1000).pipe(takeUntilDestroyed()).subscribe(console.log);
+   // interval(1000).pipe(takeUntilDestroyed()).subscribe(console.log);
     this.usersService.getUsers().pipe(takeUntilDestroyed()).subscribe();
   }
 
@@ -49,3 +49,6 @@ export class Users implements CanComponentDeactivate {
     return true;
   }
 }
+
+
+// JIT, AOT (Ahead of time)
