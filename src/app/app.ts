@@ -19,7 +19,6 @@ class DialogComponent {}
   selector: 'app-root',
   imports: [RouterOutlet, Users, Navbar, Video, HeavySimulationComponent],
   templateUrl: './app.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.css',
 })
 export class App {
@@ -27,12 +26,12 @@ export class App {
   protected readonly title = signal('myapp');
   protected readonly age = signal(15);
   protected readonly isMinor = computed(() => this.age() < 18);
+  count =  signal(0)
 
   openDialog() {
      const dialogRef = this.dialog.open(DialogComponent)
      dialogRef.closed.subscribe(() => {
       console.log('terminé !')
      })
-
   }
 }
