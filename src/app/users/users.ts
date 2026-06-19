@@ -4,14 +4,16 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { UserCard } from './user-card/user-card';
 import { interval, Subscription } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { CanComponentDeactivate } from '../core/guards/confirm.guard';
 
 @Component({
   selector: 'app-users',
-  imports: [FormsModule, UserCard],
+  imports: [FormsModule, UserCard, RouterLink],
   templateUrl: './users.html',
   styleUrl: './users.css',
 })
-export class Users {
+export class Users implements CanComponentDeactivate {
   private usersService = inject(UsersService)
   title = signal('Utilisateurs')
   protected readonly users = this.usersService.usersFiltered
@@ -42,6 +44,10 @@ export class Users {
         takeUntilDestroyed()
       )
       .subscribe()
+  }
+
+  isModified() {
+    return true
   }
 
 }

@@ -4,6 +4,7 @@ import { Users } from './users/users';
 import { authGuard } from './core/guards/auth.guard';
 import { Forbidden } from './forbidden/forbidden';
 import { permissionGuard } from './core/guards/permission.guard';
+import { confirmDeactivateGuard } from './core/guards/confirm.guard';
 
 export const routes: Routes = [{
     path: 'login',
@@ -12,6 +13,7 @@ export const routes: Routes = [{
     path: '',
     component: Users,
     canActivate: [authGuard, permissionGuard(['user.read', 'user.delete'])],
+    canDeactivate: [confirmDeactivateGuard],
     data: {
         requiredAuth: true,
         //requiredPermissions: ['user.read', 'user.delete']
