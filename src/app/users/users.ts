@@ -10,11 +10,11 @@ import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 })
 export class Users {
   private userService = inject(UserService)
-  //users = toSignal(this.userService.getAll())
-  usersResource = rxResource({
+  //protected readonly users = toSignal(this.userService.getAll())
+  protected readonly usersResource = rxResource({
     stream: () => {
       return this.userService.getAll()
     }
   })
-  loading = computed(() => this.usersResource.isLoading())
+  protected readonly loading = computed(() => this.usersResource.isLoading())
 }
