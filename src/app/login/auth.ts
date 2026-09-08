@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { map, Observable, tap, timer } from 'rxjs';
 
 function simulateHttpToken(): Observable<{ token: string }> {
@@ -16,6 +16,7 @@ function simulateHttpToken(): Observable<{ token: string }> {
 })
 export class AuthService {
   token = signal<string | null>(null)
+  isConnected = computed(() => !!this.token())
 
   login(email: string, password: string): Observable<void> {
     return simulateHttpToken().pipe(
