@@ -1,0 +1,9 @@
+<form [formGroup]="form" (submit)="login()">
+    <label>Email</label>
+    <input type="text" [formControl]="emailControl"> 
+
+    <label>Mot de passe</label>
+    <input type="text" [formControl]="passControl"> 
+
+    <button>Connexion</button>
+</form>
