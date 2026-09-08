@@ -1,9 +1,7 @@
-const age = signal(42)
-const isMinor = computed(() => age() < 18)
+console.log('a')
 
-age.set(15)
-console.log(isMinor())
-
-effect(() => {
-    console.log(age())
+setTimeout(() => {
+    console.log('b')
 })
+
+console.log('c')

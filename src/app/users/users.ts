@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { UserService } from './user';
 import { User } from '../core/interfaces/user';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
+import { UserCard } from "./user-card/user-card";
 
 @Component({
-  imports: [],
+  imports: [UserCard],
   selector: 'app-users',
   templateUrl: './users.html'
 })

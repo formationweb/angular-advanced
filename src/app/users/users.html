@@ -1,8 +1,7 @@
 <div>
     @for (user of usersResource.value() ; track user.id) {
         <div test-users>
-            <h1>{{ user.name }}</h1>
-            <span>{{ user.email }}</span>
+           <app-user-card [user]="user" />
         </div>
     }
 </div>
