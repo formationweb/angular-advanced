@@ -21,15 +21,20 @@ export class Users {
   private router = inject(Router)
 
   search = input('')
+  ext = input('')
+
 
   //users$ =  this.userService.getAll().pipe(takeUntilDestroyed(this.destroyRef))
-  protected readonly users = toSignal(this.userService.getAll())
+  protected readonly users = toSignal(this.userService.getAll(), {
+    initialValue: []
+  })
   //  protected readonly usersResource = rxResource({
   //   stream: () => {
   //     return this.userService.getAll()
   //   }
   // })
   protected readonly searchValue = linkedSignal(() => this.search())
+  protected readonly extension = linkedSignal(() => this.ext() ?? '')
   // protected readonly usersResource = resource({
   //   params: () => {
   //     return {
@@ -42,9 +47,18 @@ export class Users {
   //     }).then(res => res.json()) 
   //   }
   // })
-  protected readonly usersResource = httpResource<User[]>(
-      () => 'https://jsonplaceholder.typicode.com/users?search=' + this.search())
-  protected readonly loading = computed(() => this.usersResource.isLoading())
+  // protected readonly usersResource = httpResource<User[]>(
+  //     () => 'https://jsonplaceholder.typicode.com/users?search=' + this.search())
+ // protected readonly loading = computed(() => this.usersResource.isLoading())
+  protected readonly extensions =  computed(() => {
+    return this.users()
+      .map(user => '.' + user.email.split('.').pop())
+  })
+  protected readonly usersFiltered = computed(() => {
+    return this.users().filter(user => {
+      return user.name.includes(this.searchValue()) && user.email.endsWith(this.extension())
+    })
+  })
 
     constructor() {
       // this.route.queryParamMap.subscribe(map => {
@@ -53,7 +67,7 @@ export class Users {
       // })
       effect(() => {
          this.router.navigate([], {
-           queryParams: { search: this.searchValue() },
+           queryParams: { search: this.searchValue(), ext: this.extension() },
            replaceUrl: true
          })
       })
