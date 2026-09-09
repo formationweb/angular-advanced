@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandlerFn, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { inject } from "@angular/core";
-import { Observable } from "rxjs";
+import { catchError, Observable } from "rxjs";
 import { AuthService } from "../../login/auth";
 
 export const authInterceptor = 
@@ -20,5 +20,10 @@ export const authInterceptor =
             headers
         })
 
-        return next(newReq)
+        return next(newReq).pipe(
+            catchError((err) => {
+                console.log(err)
+                throw err
+            })
+        )
 }

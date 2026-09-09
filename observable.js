@@ -19,7 +19,14 @@ import { AsyncSubject, BehaviorSubject, interval, map, merge, mergeMap, Observab
 
 interval(1000).pipe(
     switchMap((nb) => interval(1000).pipe(map(() => Math.random()))
-)).subscribe(console.log)
+)).subscribe({
+    next: (nb) => {
+        console.log(nb)
+    },
+    error: (err) => {
+        console.log(err)
+    }
+})
 
 // const ob$ = new AsyncSubject() 
 
