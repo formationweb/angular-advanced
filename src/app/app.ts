@@ -5,6 +5,6 @@ import { Video } from './video/video';
 @Component({
   imports: [RouterOutlet, Video],
   selector: 'app-root',
-  template: `<app-video />`
+  template: `<router-outlet />`
 })
 export class App {}
