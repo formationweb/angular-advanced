@@ -1,5 +1,10 @@
 <div>
-    @for (user of usersResource.value() ; track user.id) {
+    <!-- @for (user of usersResource.value() ; track user.id) {
+        <div test-users>
+           <app-user-card [user]="user" />
+        </div>
+    } -->
+    @for (user of users$ | async; track user.id) {
         <div test-users>
            <app-user-card [user]="user" />
         </div>
