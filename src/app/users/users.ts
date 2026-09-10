@@ -56,7 +56,7 @@ export class Users {
   })
   protected readonly usersFiltered = computed(() => {
     return this.users().filter(user => {
-      return user.name.includes(this.searchValue()) && user.email.endsWith(this.extension())
+      return user.name.includes(this.searchValue() ?? '') && user.email.endsWith(this.extension())
     })
   })
 

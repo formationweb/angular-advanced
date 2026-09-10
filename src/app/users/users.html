@@ -7,7 +7,10 @@
     </select>
     @for (user of usersFiltered() ; track user.id) {
         <div test-users>
-           <app-user-card [user]="user" />
+           <app-user-card [user]="user">
+                <header #headerRef>entête</header>
+                <footer>footer</footer>
+            </app-user-card>
         </div>
     }
     <!-- @for (user of users$ | async; track user.id) {
