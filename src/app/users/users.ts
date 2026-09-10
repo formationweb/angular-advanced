@@ -9,9 +9,10 @@ import { FormsModule } from '@angular/forms';
 import { httpResource } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserStore } from '../store/user.store';
+import { form, FormField } from '@angular/forms/signals';
 
 @Component({
-  imports: [UserCard, FormsModule],
+  imports: [UserCard, FormsModule, FormField],
   selector: 'app-users',
   templateUrl: './users.html'
 })
@@ -19,8 +20,22 @@ export class Users {
   private userStore = inject(UserStore)
   protected readonly users = this.userStore.users
   protected readonly nbUsers = this.userStore.nbUsers
+  protected readonly userModel = signal({
+    email: '',
+    name: ''
+  })
+  protected readonly userForm = form(this.userModel)
 
   constructor() {
     this.userStore.getUsers('Leanne')
+  }
+
+  addUser(event: Event) {
+    event.preventDefault()
+    this.userStore.createUser(this.userModel())
+  }
+
+  removeUser(id: number) {
+    this.userStore.deleteUser(id)
   }
 }

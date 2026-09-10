@@ -1,9 +1,20 @@
 <div>
     <span>Il y {{ nbUsers() }} utilisateurs</span>
 
+    <form (submit)="addUser($event)">
+        <label>Email</label>
+        <input type="text" [formField]="userForm.email">
+
+        <label>Nom</label>
+        <input type="text" [formField]="userForm.name">
+
+        <button>Créer un utilisateur</button>
+    </form>
+    
+
     @for (user of users() ; track user.id) {
         <div>
-            <app-user-card [user]="user" />
+            <app-user-card [user]="user" (onDelete)="removeUser($event)" />
         </div>
     }
 </div>
