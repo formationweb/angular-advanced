@@ -1,13 +1,19 @@
 import { Routes } from '@angular/router';
-import { Users } from './users/users';
 import { Login } from './login/login';
 import { authGuard } from './core/guards/auth';
 
-export const routes: Routes = [{
+export const routes: Routes = [
+  {
     path: '',
-    component: Users,
-    canActivate: [authGuard]
-}, {
+    canActivate: [authGuard],
+    loadComponent: () => import('./users/users').then((mod) => mod.Users),
+  },
+  {
     path: 'login',
-    component: Login
-}];
+    component: Login,
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.routes').then((mod) => mod.adminRoutes),
+  },
+];
