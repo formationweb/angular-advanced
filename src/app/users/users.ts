@@ -10,9 +10,10 @@ import { httpResource } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserStore } from '../store/user.store';
 import { form, FormField } from '@angular/forms/signals';
+import { HeavySimulationComponent } from "../heavy.component";
 
 @Component({
-  imports: [UserCard, FormsModule, FormField],
+  imports: [UserCard, FormsModule, FormField, HeavySimulationComponent],
   selector: 'app-users',
   templateUrl: './users.html'
 })
