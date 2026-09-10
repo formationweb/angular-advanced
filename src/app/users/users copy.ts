@@ -13,7 +13,7 @@ import { UserStore } from '../store/user.store';
 @Component({
   imports: [UserCard, AsyncPipe, FormsModule],
   selector: 'app-users',
-  templateUrl: './users.html'
+  templateUrl: './users copy.html'
 })
 export class Users {
   private userService = inject(UserService)

@@ -1,4 +1,6 @@
 <div>
+    <span>Il y {{ nbUsers() }} utilisateurs</span>
+
     @for (user of users() ; track user.id) {
         <div>
             <app-user-card [user]="user" />

@@ -18,8 +18,9 @@ import { UserStore } from '../store/user.store';
 export class Users {
   private userStore = inject(UserStore)
   protected readonly users = this.userStore.users
+  protected readonly nbUsers = this.userStore.nbUsers
 
   constructor() {
-    this.userStore.getUsers()
+    this.userStore.getUsers('Leanne')
   }
 }
