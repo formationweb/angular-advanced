@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from './auth';
 import { Router } from '@angular/router';
-import { FormFactory } from '../json-schema-form/form-factory';
+import { FormFactory, SchemaForm } from '../json-schema-form';
 
 const loginSchema = {
   type: 'object',
@@ -28,7 +28,7 @@ const loginSchema = {
 };
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SchemaForm],
   selector: 'app-login',
   styleUrl: './login.css',
   templateUrl: './login.html',
@@ -45,6 +45,7 @@ export class Login {
   //   email: this.emailControl,
   //   password: this.passControl
   // })
+  protected readonly loginSchema = signal(loginSchema)
 
   login() {
     const { email, password } = this.form.value as { email: string; password: string };
@@ -52,5 +53,9 @@ export class Login {
     // this.authService.login(email, password).subscribe(() => {
     //   this.router.navigateByUrl('/');
     // });
+  }
+
+  listenForm(form: FormGroup) {
+    console.log(form.value)
   }
 }

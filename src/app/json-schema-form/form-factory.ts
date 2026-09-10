@@ -2,7 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { inject, Injectable } from "@angular/core";
 
 export type Schema = {
-    type: 'string' | 'number' | 'object' | 'boolean'
+    type: string
     properties?: Record<string, Schema>,
     required?: string[]
     minLength?: number

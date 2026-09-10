@@ -1,0 +1,20 @@
+<form [formGroup]="currentForm()" (submit)="formSubmit.emit(rootForm)">
+    @for (field of fields() ; track field) {
+        @let fieldType = field[1].type;
+        @let fieldGroup = field[1];
+        @let fieldName = field[0];
+        <label>{{ fieldName }}</label>
+        @if (fieldType == 'string') {
+            <input type="text" [formControlName]="fieldName">
+        }
+        @if (fieldType == 'boolean') {
+            <input type="checkbox" [formControlName]="fieldName">
+        }
+        @if (fieldType == 'object') {
+            <div>
+                <app-schema-form [schema]="fieldGroup" [form]="getGroup(fieldName)" />
+            </div>
+        }
+    }
+    <ng-content />
+</form>
