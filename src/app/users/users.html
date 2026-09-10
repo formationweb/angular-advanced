@@ -13,7 +13,7 @@
     
 
     @for (user of users() ; track user.id) {
-        <div>
+        <div test-users>
             <app-user-card [user]="user" (onDelete)="removeUser($event)" />
         </div>
     }
