@@ -1,13 +1,14 @@
-<!-- <form [formGroup]="form" (submit)="login()">
+<form (submit)="login($event)" novalidate>
     <label>Email</label>
-    <input type="text" formControlName="email"> 
+    <input type="text" [formField]="loginForm.email"> 
 
     <label>Mot de passe</label>
-    <input type="text" formControlName="password"> 
+    <input type="password" [formField]="loginForm.password"> 
+
+    @if (isInvalid()) {
+        <span>C'est invalide</span>
+        {{ errorEmail() }}
+    }
 
     <button>Connexion</button>
-</form> -->
-
-<app-schema-form [schema]="loginSchema()" (formSubmit)="listenForm($event)">
-    <button>Soumettre</button>
-</app-schema-form>
+</form> 

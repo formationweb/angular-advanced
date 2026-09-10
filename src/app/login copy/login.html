@@ -1,0 +1,13 @@
+<!-- <form [formGroup]="form" (submit)="login()">
+    <label>Email</label>
+    <input type="text" formControlName="email"> 
+
+    <label>Mot de passe</label>
+    <input type="text" formControlName="password"> 
+
+    <button>Connexion</button>
+</form> -->
+
+<app-schema-form [schema]="loginSchema()" (formSubmit)="listenForm($event)">
+    <button>Soumettre</button>
+</app-schema-form>
