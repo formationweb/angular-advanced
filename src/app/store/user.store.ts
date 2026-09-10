@@ -1,9 +1,11 @@
 import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from "@ngrx/signals";
 import { User } from "../core/interfaces/user";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
-import { computed, inject } from "@angular/core";
+import { computed, inject, makeStateKey, TransferState } from "@angular/core";
 import { UserPayload, UserService } from "../users/user";
-import { catchError, map, pipe, switchMap, tap } from "rxjs";
+import { catchError, map, of, pipe, switchMap, tap } from "rxjs";
+
+const CACHE_KEY = makeStateKey<User[]>('users')
 
 export const UserStore = signalStore(
     { providedIn: 'root' },
@@ -21,10 +23,17 @@ export const UserStore = signalStore(
     }),
     withMethods((store) => {
         const userService = inject(UserService)
+        const transferState = inject(TransferState)
         return {
             getUsers: rxMethod(
                 pipe(
-                    switchMap((search) => userService.getAll()),
+                    switchMap((search) => {
+                        const cached = transferState.get(CACHE_KEY, null)
+                        if (cached) {
+                            return of(cached)
+                        }
+                        return userService.getAll()
+                    }),
                     tap((users) => {
                         patchState(store, (state) => {
                             return {
