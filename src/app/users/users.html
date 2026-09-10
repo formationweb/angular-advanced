@@ -1,21 +1,7 @@
 <div>
-    <input type="text" [(ngModel)]="searchValue">
-    <select [(ngModel)]="extension">
-        @for (_ext of extensions() ; track _ext) {
-            <option>{{ _ext }}</option>
-        }
-    </select>
-    @for (user of usersFiltered() ; track user.id) {
-        <div test-users>
-           <app-user-card [user]="user">
-                <header #headerRef>entête</header>
-                <footer>footer</footer>
-            </app-user-card>
+    @for (user of users() ; track user.id) {
+        <div>
+            <app-user-card [user]="user" />
         </div>
     }
-    <!-- @for (user of users$ | async; track user.id) {
-        <div test-users>
-           <app-user-card [user]="user" />
-        </div>
-    } -->
 </div>
