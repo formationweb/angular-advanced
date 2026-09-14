@@ -1,0 +1,9 @@
+<div>
+    @for (user of users.value() ; track user.id) {
+        <h1>{{ user.name }}</h1>
+        <span>{{ user.email }}</span>
+    }
+</div>
+
+{{ users.error() }}
+{{ users.isLoading() }}
