@@ -3,8 +3,7 @@
     <h2>sous titre</h2>
     @for (user of users.value() ; track user.id) {
         <div test-users>
-            <h2>{{ user.name }}</h2>
-            <span>{{ user.email }}</span>
+            <app-user-card [user]="user" />
         </div>
     }
 </div>
