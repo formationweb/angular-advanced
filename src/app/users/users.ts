@@ -14,6 +14,8 @@ export class Users {
   // protected readonly users = toSignal(this.userService.getAll(), {
   //   initialValue: []
   // })
+  title = signal('Utilisateurs')
+
   protected readonly users = rxResource({
     stream: () => {
       return this.userService.getAll()
