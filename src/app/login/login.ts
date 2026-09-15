@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Auth } from './auth';
 import { Router } from '@angular/router';
+import { JsonSchemaFormFactory } from '../json-schema-form/form-factory';
 
 export const userSchema = {
   type: 'object',
@@ -52,13 +53,15 @@ export class Login {
   private auth = inject(Auth);
   private router = inject(Router);
   private builder = inject(FormBuilder);
-  form = this.builder.group({
-    email: ['', [Validators.required, Validators.minLength(2)]],
-    password: '',
-    address: this.builder.group({
-      city: '',
-    }),
-  });
+  // form = this.builder.group({
+  //   email: ['', [Validators.required, Validators.minLength(2)]],
+  //   password: '',
+  //   address: this.builder.group({
+  //     city: '',
+  //   }),
+  // });
+  private jsonSchemaFormFactory = inject(JsonSchemaFormFactory)
+  form = this.jsonSchemaFormFactory.create(loginSchema)
 
   login() {
     const { email, password } = this.form.value as LoginPayload;
