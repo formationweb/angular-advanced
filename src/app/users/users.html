@@ -1,5 +1,14 @@
+<input type="text" [(ngModel)]="searchValue">
+
+<select [(ngModel)]="extensionValue">
+    <option value="">Tous</option>
+    @for (ext of extensions() ; track ext) {
+        <option>{{ ext }}</option>
+    }
+</select>
+
 <div>
-    @for (user of users.value() ; track user.id) {
+    @for (user of usersFiltered() ; track user.id) {
         <div test-users>
             <app-user-card [user]="user" />
         </div>
