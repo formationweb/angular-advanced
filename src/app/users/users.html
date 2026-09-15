@@ -1,14 +1,7 @@
 <div>
-    <h1>{{ title() }}</h1>
-    <h2>sous titre</h2>
-    <!-- @for (user of users.value() ; track user.id) {
+    @for (user of users.value() ; track user.id) {
         <div test-users>
             <app-user-card [user]="user" />
         </div>
-    } -->
-    @for (user of (users$ | async) ; track user.id) {
-        <div test-users>
-            <app-user-card [user]="user" />
-        </div>
-    }
+    } 
 </div>

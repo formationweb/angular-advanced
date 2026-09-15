@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
+import { Component, effect, ElementRef, OnInit, viewChild } from '@angular/core';
 
 @Component({
   imports: [],
@@ -7,10 +7,17 @@ import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
     <canvas #canvasRef></canvas>
   `
 })
-export class Draw implements OnInit {
+export class Draw  {
   protected readonly canvasEl = viewChild<ElementRef<HTMLCanvasElement>>('canvasRef')
 
-  ngOnInit(): void {
-     console.log(this.canvasEl()?.nativeElement)
+  constructor() {
+    effect((onCleanup) => {
+      // const counter = setInterval(() => {
+
+      // }, 1000)
+      // onCleanup(() => {
+      //   clearInterval(counter)
+      // })
+    })
   }
 }

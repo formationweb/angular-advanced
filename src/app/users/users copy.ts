@@ -10,13 +10,29 @@ import { AsyncPipe } from '@angular/common';
   imports: [UserCard, AsyncPipe],
   selector: 'app-users',
   styleUrl: './users.css',
-  templateUrl: './users.html'
+  template: ``
 })
 export class Users  {
   private userService = inject(UserService)
-  protected readonly users = rxResource({
-    stream: () => {
-      return this.userService.getAll()
-    }
-  })
+  private destroyRef = inject(DestroyRef)
+  // protected readonly users = toSignal(this.userService.getAll(), {
+  //   initialValue: []
+  // })
+  title = signal('Utilisateurs')
+
+  users$ = this.userService.getAll()
+
+  // protected readonly users = rxResource({
+  //   stream: () => {
+  //     return this.userService.getAll()
+  //   }
+  // })
+
+  // constructor() {
+  //   this.userService.getAll()
+  //   .pipe(
+  //     //takeUntilDestroyed(this.destroyRef) // dans le constructeur n'a pas besoin de destroyRef (juste exemple ici)
+  //   )
+  //   .subscribe()
+  // }
 }
