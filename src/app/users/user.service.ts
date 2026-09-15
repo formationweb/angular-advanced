@@ -10,7 +10,7 @@ export class UserService {
     readonly url = 'https://jsonplaceholder.typicode.com/users'
     private http = inject(HttpClient)
 
-    getAll(): Observable<User[]> {
-        return this.http.get<User[]>(this.url)
+    getAll(search: string): Observable<User[]> {
+        return this.http.get<User[]>(this.url + '?search=' + search)
     }
 }

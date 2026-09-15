@@ -20,7 +20,7 @@ export class Users  {
   // })
   title = signal('Utilisateurs')
 
-  users$ = this.userService.getAll()
+  users$ = this.userService.getAll('')
 
   // protected readonly users = rxResource({
   //   stream: () => {
