@@ -1,4 +1,5 @@
-import { computed, Service, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { computed, inject, PLATFORM_ID, Service, signal } from '@angular/core';
 import { map, Observable, tap, timer } from "rxjs";
 
 function simulateHttpToken(): Observable<{ token: string }> {
@@ -13,8 +14,15 @@ const KEY = 'angular-token'
 
 @Service()
 export class Auth {
-    token = signal<string | null>(localStorage.getItem(KEY))
+    private platformId = inject(PLATFORM_ID)
+    token = signal<string | null>('')
     isConnected = computed(() => !!this.token())
+
+    constructor() {
+        if (isPlatformBrowser(this.platformId)) {
+            this.token.set(localStorage.getItem(KEY))
+        }
+    }
 
     login(email: string, password: string): Observable<void> {
         return simulateHttpToken().pipe(
