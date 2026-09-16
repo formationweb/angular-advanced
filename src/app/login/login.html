@@ -1,9 +1,3 @@
-<form [formGroup]="form" (submit)="login()">
-    <label>Email</label>
-    <input type="text" formControlName="email" />
-
-    <label>Mot de passe</label>
-    <input type="password"  formControlName="password" />
-
-    <button>Connexion</button>
-</form>
+<app-json-form [schema]="loginSchema()" (formSubmit)="login($event)" >
+    <button>Se connecter</button>
+</app-json-form>

@@ -19,7 +19,7 @@ export class JsonSchemaFormFactory {
     create(schema: Schema): FormGroup {
         const createGroup = (groupObj: Schema) => {
             let group: Record<string, any> = {}
-            for (let fieldName in schema.properties) {
+            for (let fieldName in groupObj.properties) {
                 const schemaProp = groupObj.properties?.[fieldName]
                 if (schemaProp?.type == 'object') {
                      group[fieldName] = createGroup(schemaProp)

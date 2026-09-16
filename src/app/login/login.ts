@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Auth } from './auth';
 import { Router } from '@angular/router';
-import { JsonSchemaFormFactory } from '../json-schema-form/form-factory';
+import { JsonForm } from '../json-schema-form';
 
 export const userSchema = {
   type: 'object',
@@ -44,7 +44,7 @@ type LoginPayload = {
 };
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, JsonForm],
   selector: 'app-login',
   styleUrl: './login.css',
   templateUrl: './login.html',
@@ -52,19 +52,12 @@ type LoginPayload = {
 export class Login {
   private auth = inject(Auth);
   private router = inject(Router);
-  private builder = inject(FormBuilder);
-  // form = this.builder.group({
-  //   email: ['', [Validators.required, Validators.minLength(2)]],
-  //   password: '',
-  //   address: this.builder.group({
-  //     city: '',
-  //   }),
-  // });
-  private jsonSchemaFormFactory = inject(JsonSchemaFormFactory)
-  form = this.jsonSchemaFormFactory.create(loginSchema)
+  readonly loginSchema = signal(userSchema)
 
-  login() {
-    const { email, password } = this.form.value as LoginPayload;
+  login(form: FormGroup) {
+    console.log(form.value)
+    if (form.invalid) return
+    const { email, password } = form.value as LoginPayload;
     this.auth.login(email, password).subscribe(() => {
       this.router.navigateByUrl('/');
     });
