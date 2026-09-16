@@ -1,65 +1,46 @@
-import { Component, inject, signal } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Auth } from './auth';
-import { Router } from '@angular/router';
-import { JsonForm } from '../json-schema-form';
+import { Component, computed, effect, signal } from '@angular/core';
+import { form, FormField, minLength, required, SchemaPathTree } from '@angular/forms/signals';
 
-export const userSchema = {
-  type: 'object',
-  properties: {
-    name: { type: 'string', minLength: 2 },
-    email: { type: 'string', format: 'email' },
+type LoginModel = {
+  email: string
+  password: string
+}
 
-    address: {
-      type: 'object',
-      properties: {
-        city: { type: 'string' },
-        zipcode: { type: 'string', minLength: 5 },
-      },
-      required: ['city'],
-    },
-  },
-
-  required: ['name', 'email'],
-};
-
-export const loginSchema = {
-  type: 'object',
-  properties: {
-    password: { type: 'string', minLength: 2 },
-    email: { type: 'string', format: 'email' },
-  },
-  required: ['password', 'email'],
-};
-
-type LoginPayload = {
-  email: string;
-  password: string;
-};
+function groupValidators(path: SchemaPathTree<LoginModel>) {
+    required(path.email, {
+      message: 'Email requis'
+    })
+    minLength(path.email, 2)
+    required(path.password)
+}
 
 @Component({
-  imports: [ReactiveFormsModule, JsonForm],
+  imports: [FormField],
   selector: 'app-login',
   styleUrl: './login.css',
   templateUrl: './login.html',
 })
 export class Login {
-  private auth = inject(Auth);
-  private router = inject(Router);
-  readonly loginSchema = signal(userSchema)
+  loginModel = signal({
+    email: '',
+    password: '',
+    address: {
+      city: ''
+    }
+  })
+  loginForm = form(this.loginModel, (path) => {
+     groupValidators(path)
+  })
+  isValid = computed(() => this.loginForm().valid())
+  errorEmail = computed(() => this.loginForm.email().errors()[0]?.message)
 
-  login(form: FormGroup) {
-    console.log(form.value)
-    if (form.invalid) return
-    const { email, password } = form.value as LoginPayload;
-    this.auth.login(email, password).subscribe(() => {
-      this.router.navigateByUrl('/');
-    });
+  constructor() {
+    effect(() => {
+      console.log(this.loginForm())
+    })
+  }
+
+  login(event: Event) {
+    event.preventDefault()
   }
 }

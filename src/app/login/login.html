@@ -1,3 +1,18 @@
-<app-json-form [schema]="loginSchema()" (formSubmit)="login($event)" >
+<form (submit)="login($event)" novalidate>
+
+    @if (isValid()) {
+        <div>
+            Formulaire valide
+        </div>
+    }
+
+    {{ errorEmail() }}
+
+    <label>Email</label>
+    <input type="text" [formField]="loginForm.email" />
+
+    <label>Mot de passe</label>
+    <input type="password" [formField]="loginForm.password" />
+
     <button>Se connecter</button>
-</app-json-form>
+</form>
