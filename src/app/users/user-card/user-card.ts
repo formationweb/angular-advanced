@@ -1,4 +1,4 @@
-import { Component, effect, input, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, effect, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { User } from '../user';
 
 @Component({
@@ -10,6 +10,7 @@ import { User } from '../user';
 export class UserCard {
   //@Input() user: User = {} as User
   user = input.required<User>()
+  onDelete = output<number>()
 
   constructor() {
     effect(() => {
