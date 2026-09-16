@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 export type Schema = {
     type: string
@@ -17,10 +17,29 @@ export class JsonSchemaFormFactory {
     private readonly formBuilder = inject(FormBuilder)
 
     create(schema: Schema): FormGroup {
-        let group: Record<string, any> = {}
-        for (let fieldName in schema.properties) {
-            group[fieldName] = ['']
+        const createGroup = (groupObj: Schema) => {
+            let group: Record<string, any> = {}
+            for (let fieldName in schema.properties) {
+                const schemaProp = groupObj.properties?.[fieldName]
+                if (schemaProp?.type == 'object') {
+                     group[fieldName] = createGroup(schemaProp)
+                }
+                else {
+                    const validators = []
+                    if (schemaProp?.minLength) {
+                        validators.push(Validators.minLength(schemaProp?.minLength))
+                    }
+                    if (schemaProp?.format == 'email') {
+                        validators.push(Validators.email)
+                    }
+                    if (groupObj.required?.includes(fieldName)) {
+                        validators.push(Validators.required)
+                    }
+                    group[fieldName] = ['', validators]
+                }
+            }
+            return this.formBuilder.group(group)
         }
-        return this.formBuilder.group(group)
+        return createGroup(schema)
     }
 }
