@@ -6,10 +6,11 @@ import {
 import { UserCard } from './user-card/user-card';
 import { UserStore } from '../store/user.store';
 import { form, FormField } from '@angular/forms/signals';
+import { HeavySimulationComponent } from '../heavy.component';
 
 
 @Component({
-  imports: [UserCard, FormField],
+  imports: [UserCard, FormField, HeavySimulationComponent],
   selector: 'app-users',
   styleUrl: './users.css',
   templateUrl: './users.html',
